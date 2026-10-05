@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Syed Farhan — Python Full Stack Developer portfolio." />
+  <title>Syed Farhan — Python Full Stack Developer</title>
+
+  <style>
+    :root {
+      --bg: #080b12;
+      --bg-soft: #0d111b;
+      --card: rgba(18, 24, 38, 0.72);
+      --card-solid: #111725;
+      --text: #f5f7fb;
+      --muted: #9aa5b5;
+      --line: rgba(255,255,255,.09);
+      --accent: #7c5cff;
+      --accent-2: #20d9c4;
+      --accent-3: #6ea8fe;
+      --shadow: 0 24px 70px rgba(0,0,0,.32);
+      --radius: 24px;
+      --max: 1180px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at 10% 10%, rgba(124,92,255,.16), transparent 28%),
+        radial-gradient(circle at 88% 16%, rgba(32,217,196,.10), transparent 24%),
+        radial-gradient(circle at 50% 85%, rgba(110,168,254,.08), transparent 30%),
+        var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; }
+    .container { width: min(calc(100% - 40px), var(--max)); margin: auto; }
+
+    .orb {
+      position: fixed;
+      width: 260px;
+      height: 260px;
+      border-radius: 50%;
+      filter: blur(90px);
+      opacity: .13;
+      pointer-events: none;
+      z-index: -1;
+    }
+    .orb.one { background: var(--accent); top: 18%; left: -120px; }
+    .orb.two { background: var(--accent-2); top: 60%; right: -130px; }
+
+    nav {
+      position: fixed;
+      top: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(calc(100% - 28px), 1060px);
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 11px 14px 11px 18px;
+      background: rgba(8,11,18,.68);
+      border: 1px solid var(--line);
+      backdrop-filter: blur(18px);
+      border-radius: 18px;
+      box-shadow: 0 12px 40px rgba(0,0,0,.18);
+    }
+
+    .brand { font-weight: 800; letter-spacing: -.03em; }
+    .brand span { color: var(--accent-2); }
+    .nav-links { display: flex; gap: 4px; align-items: center; }
+    .nav-links a {
+      padding: 8px 12px;
+      border-radius: 10px;
+      color: var(--muted);
+      font-size: .9rem;
+      transition: .25s ease;
+    }
+    .nav-links a:hover { color: var(--text); background: rgba(255,255,255,.06); }
+
+    .menu { display: none; border: 0; background: transparent; color: var(--text); cursor: pointer; font-size: 1.4rem; }
+
+    section { padding: 110px 0; }
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding-top: 130px;
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 70px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 7px 11px;
+      border: 1px solid rgba(32,217,196,.22);
+      background: rgba(32,217,196,.07);
+      border-radius: 999px;
+      color: #a8fff3;
+      font-size: .8rem;
+      margin-bottom: 22px;
+    }
+    .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent-2); box-shadow: 0 0 14px var(--accent-2); }
+
+    h1 {
+      font-size: clamp(3.1rem, 7vw, 6.5rem);
+      line-height: .92;
+      letter-spacing: -.065em;
+      max-width: 850px;
+    }
+    .gradient-text {
+      background: linear-gradient(100deg, #fff 15%, #b8aaff 52%, #65f0dc 95%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .hero-copy {
+      color: var(--muted);
+      font-size: 1.12rem;
+      max-width: 680px;
+      margin: 26px 0 30px;
+    }
+
+    .cta-row { display: flex; flex-wrap: wrap; gap: 12px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      padding: 12px 18px;
+      border-radius: 13px;
+      border: 1px solid var(--line);
+      transition: transform .2s, border-color .2s, background .2s;
+      font-weight: 700;
+      font-size: .92rem;
+    }
+    .btn:hover { transform: translateY(-2px); border-color: rgba(255,255,255,.2); }
+    .btn.primary {
+      background: linear-gradient(135deg, var(--accent), #9b77ff);
+      border-color: transparent;
+      box-shadow: 0 12px 30px rgba(124,92,255,.25);
+    }
+    .btn.secondary { background: rgba(255,255,255,.04); }
+
+    .hero-card {
+      position: relative;
+      min-height: 410px;
+      display: grid;
+      place-items: center;
+    }
+    .profile-ring {
+      width: 290px;
+      height: 290px;
+      border-radius: 50%;
+      padding: 2px;
+      background: conic-gradient(from 90deg, var(--accent), var(--accent-2), var(--accent-3), var(--accent));
+      box-shadow: 0 0 80px rgba(124,92,255,.18);
+      animation: float 5s ease-in-out infinite;
+    }
+    .profile-inner {
+      width: 100%;
+      height: 100%;
+      border-radius: inherit;
+      background:
+        radial-gradient(circle at 30% 25%, rgba(124,92,255,.25), transparent 25%),
+        linear-gradient(145deg, #171d2d, #090c13);
+      display: grid;
+      place-items: center;
+      font-size: 5.5rem;
+      font-weight: 900;
+      letter-spacing: -.08em;
+    }
+    .profile-inner small {
+      position: absolute;
+      margin-top: 250px;
+      font-size: .72rem;
+      color: var(--muted);
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .float-card {
+      position: absolute;
+      padding: 13px 15px;
+      border-radius: 15px;
+      border: 1px solid var(--line);
+      background: rgba(17,23,37,.78);
+      backdrop-filter: blur(15px);
+      box-shadow: var(--shadow);
+      font-size: .78rem;
+      color: var(--muted);
+    }
+    .float-card strong { display: block; color: var(--text); font-size: .9rem; }
+    .float-card.a { top: 25px; right: 0; }
+    .float-card.b { bottom: 35px; left: 0; }
+
+    .section-head { margin-bottom: 40px; }
+    .kicker {
+      color: var(--accent-2);
+      font-size: .75rem;
+      text-transform: uppercase;
+      letter-spacing: .16em;
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+    h2 {
+      font-size: clamp(2rem, 4vw, 3.4rem);
+      line-height: 1;
+      letter-spacing: -.045em;
+    }
+    .section-sub { color: var(--muted); margin-top: 13px; max-width: 650px; }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 22px;
+    }
+    .glass {
+      background: linear-gradient(145deg, rgba(20,27,43,.82), rgba(12,16,26,.66));
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    .about-card { padding: 30px; }
+    .about-card p { color: var(--muted); margin-bottom: 15px; }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+    .stat {
+      padding: 22px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.025);
+    }
+    .stat b { display: block; font-size: 1.65rem; }
+    .stat span { color: var(--muted); font-size: .82rem; }
+
+    .skills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin-top: 25px;
+    }
+    .skill {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.035);
+      color: #cdd4df;
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: .8rem;
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+    }
+    .project {
+      position: relative;
+      overflow: hidden;
+      padding: 26px;
+      min-height: 280px;
+      display: flex;
+      flex-direction: column;
+      transition: transform .25s, border-color .25s;
+    }
+    .project:hover { transform: translateY(-5px); border-color: rgba(124,92,255,.32); }
+    .project-number {
+      color: #6f7890;
+      font-size: .75rem;
+      font-weight: 800;
+      letter-spacing: .14em;
+    }
+    .project h3 { font-size: 1.35rem; margin: 18px 0 8px; }
+    .project p { color: var(--muted); font-size: .9rem; }
+    .project-tags { margin-top: auto; padding-top: 22px; display: flex; flex-wrap: wrap; gap: 7px; }
+    .tag { font-size: .72rem; color: #bfc7d5; background: rgba(124,92,255,.09); border: 1px solid rgba(124,92,255,.16); padding: 6px 9px; border-radius: 8px; }
+
+    .timeline { position: relative; display: grid; gap: 15px; }
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 11px;
+      top: 12px;
+      bottom: 12px;
+      width: 1px;
+      background: var(--line);
+    }
+    .timeline-item { position: relative; padding-left: 42px; }
+    .timeline-dot {
+      position: absolute;
+      left: 5px;
+      top: 8px;
+      width: 13px;
+      height: 13px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 18px rgba(124,92,255,.6);
+    }
+    .timeline-card { padding: 22px; }
+    .timeline-card small { color: var(--accent-2); font-weight: 700; }
+    .timeline-card h3 { margin: 5px 0; }
+    .timeline-card p { color: var(--muted); font-size: .9rem; }
+
+    .contact {
+      text-align: center;
+      padding-bottom: 70px;
+    }
+    .contact-box { padding: 60px 30px; overflow: hidden; position: relative; }
+    .contact-box::before {
+      content: "";
+      position: absolute;
+      width: 280px; height: 280px;
+      border-radius: 50%;
+      background: var(--accent);
+      filter: blur(110px);
+      opacity: .13;
+      top: -150px; left: 50%;
+      transform: translateX(-50%);
+    }
+    .contact h2 { max-width: 700px; margin: auto; position: relative; }
+    .contact p { color: var(--muted); margin: 16px auto 25px; max-width: 570px; position: relative; }
+    .contact .cta-row { justify-content: center; position: relative; }
+
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 24px 0 35px;
+      color: #70798b;
+      font-size: .8rem;
+      text-align: center;
+    }
+
+    .reveal { opacity: 0; transform: translateY(18px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.show { opacity: 1; transform: translateY(0); }
+    @keyframes float { 50% { transform: translateY(-10px); } }
+
+    @media (max-width: 850px) {
+      .hero-grid, .about-grid { grid-template-columns: 1fr; }
+      .hero { min-height: auto; padding-top: 150px; }
+      .hero-card { min-height: 330px; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 62px; left: 0; right: 0;
+        padding: 10px;
+        flex-direction: column;
+        background: rgba(8,11,18,.95);
+        border: 1px solid var(--line);
+        border-radius: 15px;
+      }
+      .nav-links.open { display: flex; }
+      .nav-links a { width: 100%; text-align: center; }
+      .menu { display: block; }
+    }
+
+    @media (max-width: 520px) {
+      .container { width: min(calc(100% - 26px), var(--max)); }
+      section { padding: 80px 0; }
+      h1 { font-size: 3.4rem; }
+      .profile-ring { width: 230px; height: 230px; }
+      .profile-inner { font-size: 4.4rem; }
+      .profile-inner small { margin-top: 205px; }
+      .float-card.a { right: -3px; }
+      .float-card.b { left: -3px; }
+      .stats { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="orb one"></div>
+  <div class="orb two"></div>
+
+  <nav>
+    <a class="brand" href="#home">Farhan<span>.</span></a>
+    <div class="nav-links" id="navLinks">
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#experience">Experience</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <button class="menu" id="menuBtn" aria-label="Open menu">☰</button>
+  </nav>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="container hero-grid">
+        <div class="reveal">
+          <div class="eyebrow"><span class="dot"></span> Python Full Stack Developer</div>
+          <h1>Building <span class="gradient-text">useful digital products</span> from idea to deployment.</h1>
+          <p class="hero-copy">
+            I'm Syed Farhan, a Computer Science graduate and full stack developer focused on
+            Python, Django, REST APIs, React and modern web experiences. I enjoy turning complex
+            problems into clean, practical products.
+          </p>
+          <div class="cta-row">
+            <a class="btn primary" href="#projects">Explore my work ↗</a>
+            <a class="btn secondary" href="#contact">Let's connect</a>
+          </div>
+        </div>
+
+        <div class="hero-card reveal">
+          <div class="profile-ring">
+            <div class="profile-inner">
+              SF
+              <small>Code · Build · Ship</small>
+            </div>
+          </div>
+          <div class="float-card a"><strong>Full Stack</strong>Python · Django · React</div>
+          <div class="float-card b"><strong>AI & APIs</strong>Chatbots · REST · Automation</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="kicker">01 / About</div>
+          <h2>A developer who likes to build end-to-end.</h2>
+          <p class="section-sub">From frontend interfaces to backend architecture, APIs and deployment, I like understanding the whole product.</p>
+        </div>
+
+        <div class="about-grid">
+          <div class="glass about-card reveal">
+            <p>
+              I have a Bachelor's degree in Computer Science and experience building full stack
+              projects across web development, AI-oriented applications and backend systems.
+            </p>
+            <p>
+              My preferred stack combines JavaScript, React and Tailwind CSS on the frontend with
+              Python, Django, Django REST Framework and Node.js on the backend.
+            </p>
+            <p>
+              I also enjoy mentoring, hackathons and solving algorithmic problems — especially
+              when they lead to something people can actually use.
+            </p>
+          </div>
+
+          <div class="stats reveal">
+            <div class="stat"><b>2+</b><span>Years building full stack projects</span></div>
+            <div class="stat"><b>9 mo</b><span>Python full stack internship experience</span></div>
+            <div class="stat"><b>2×</b><span>Institute presentation competition winner</span></div>
+            <div class="stat"><b>1</b><span>Technical club leadership role</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="kicker">02 / Stack</div>
+          <h2>Tools I use to turn ideas into products.</h2>
+        </div>
+        <div class="glass about-card reveal">
+          <div class="skills">
+            <span class="skill">Python</span>
+            <span class="skill">Django</span>
+            <span class="skill">Django REST Framework</span>
+            <span class="skill">JavaScript</span>
+            <span class="skill">React.js</span>
+            <span class="skill">Tailwind CSS</span>
+            <span class="skill">Node.js</span>
+            <span class="skill">Express.js</span>
+            <span class="skill">REST APIs</span>
+            <span class="skill">MySQL</span>
+            <span class="skill">MongoDB</span>
+            <span class="skill">SQL</span>
+            <span class="skill">Git & GitHub</span>
+            <span class="skill">Power BI</span>
+            <span class="skill">Docker</span>
+            <span class="skill">Firebase</span>
+            <span class="skill">Machine Learning</span>
+            <span class="skill">AI Chatbots</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="kicker">03 / Selected Work</div>
+          <h2>Projects that show how I think.</h2>
+          <p class="section-sub">A mix of full stack applications, AI/ML projects and practical tools.</p>
+        </div>
+
+        <div class="projects-grid">
+          <article class="glass project reveal">
+            <span class="project-number">01</span>
+            <h3>Movie Explorer</h3>
+            <p>A responsive movie discovery experience using React and the TMDb API, focused on search, browsing and a smooth user experience.</p>
+            <div class="project-tags"><span class="tag">React</span><span class="tag">API</span><span class="tag">JavaScript</span></div>
+          </article>
+
+          <article class="glass project reveal">
+            <span class="project-number">02</span>
+            <h3>University Result Portal Clone</h3>
+            <p>A result portal experience with React and Tailwind, backed by Google Sheets through Apps Script and protected with hCaptcha.</p>
+            <div class="project-tags"><span class="tag">React</span><span class="tag">Tailwind</span><span class="tag">Apps Script</span></div>
+          </article>
+
+          <article class="glass project reveal">
+            <span class="project-number">03</span>
+            <h3>ExTracker</h3>
+            <p>An expense tracking web application built as a hackathon project, designed around practical personal finance workflows.</p>
+            <div class="project-tags"><span class="tag">Full Stack</span><span class="tag">Hackathon</span><span class="tag">Web App</span></div>
+          </article>
+
+          <article class="glass project reveal">
+            <span class="project-number">04</span>
+            <h3>Crypto Price Tracker</h3>
+            <p>A React + Redux Toolkit application for tracking cryptocurrency prices with a clean, responsive interface.</p>
+            <div class="project-tags"><span class="tag">React</span><span class="tag">Redux Toolkit</span><span class="tag">REST API</span></div>
+          </article>
+
+          <article class="glass project reveal">
+            <span class="project-number">05</span>
+            <h3>AutoEval AI</h3>
+            <p>An AI/ML-oriented automated answer evaluation project using NLP concepts and cosine similarity to compare answers.</p>
+            <div class="project-tags"><span class="tag">Python</span><span class="tag">NLP</span><span class="tag">ML</span></div>
+          </article>
+
+          <article class="glass project reveal">
+            <span class="project-number">06</span>
+            <h3>Restro Bill</h3>
+            <p>A MERN restaurant billing system covering billing, orders and inventory workflows for a practical business use case.</p>
+            <div class="project-tags"><span class="tag">MongoDB</span><span class="tag">Express</span><span class="tag">React</span><span class="tag">Node</span></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="experience">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="kicker">04 / Experience</div>
+          <h2>Learning by building and leading.</h2>
+        </div>
+
+        <div class="timeline">
+          <div class="timeline-item reveal">
+            <span class="timeline-dot"></span>
+            <div class="glass timeline-card">
+              <small>Python Full Stack · Internship</small>
+              <h3>Full Stack Development</h3>
+              <p>Worked on full stack development using Python, Django, REST APIs and modern frontend technologies, with projects progressing from development through deployment.</p>
+            </div>
+          </div>
+
+          <div class="timeline-item reveal">
+            <span class="timeline-dot"></span>
+            <div class="glass timeline-card">
+              <small>Aug 2024 — Mar 2025</small>
+              <h3>IoT Developer Intern · Atal Tinkering Labs</h3>
+              <p>Worked with C/Arduino, sensor libraries and real-time environmental data, while also mentoring students on IoT projects and debugging hardware/software issues.</p>
+            </div>
+          </div>
+
+          <div class="timeline-item reveal">
+            <span class="timeline-dot"></span>
+            <div class="glass timeline-card">
+              <small>Leadership</small>
+              <h3>Technical Club President · SSITS</h3>
+              <p>Led the college technical club and participated in technical activities, presentations and student-focused initiatives.</p>
+            </div>
+          </div>
+
+          <div class="timeline-item reveal">
+            <span class="timeline-dot"></span>
+            <div class="glass timeline-card">
+              <small>Academic</small>
+              <h3>B.Tech — Computer Science & Engineering</h3>
+              <p>Sri Sai Institute of Technology and Science (SSITS), Rayachoty. Also served as Class Representative for two years.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="contact">
+      <div class="container">
+        <div class="glass contact-box reveal">
+          <div class="kicker">05 / Contact</div>
+          <h2>Have a product, idea, or opportunity in mind?</h2>
+          <p>I'm open to full stack development opportunities and interesting projects where I can build, learn and contribute.</p>
+          <div class="cta-row">
+            <a class="btn primary" href="mailto:your.email@example.com">Email me ↗</a>
+            <a class="btn secondary" href="https://github.com/" target="_blank" rel="noopener">GitHub ↗</a>
+            <a class="btn secondary" href="https://www.linkedin.com/" target="_blank" rel="noopener">LinkedIn ↗</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    © <span id="year"></span> Syed Farhan. Built with HTML, CSS & JavaScript.
+  </footer>
+
+  <script>
+    // Mobile navigation
+    const menuBtn = document.getElementById("menuBtn");
+    const navLinks = document.getElementById("navLinks");
+
+    menuBtn.addEventListener("click", () => {
+      navLinks.classList.toggle("open");
+      menuBtn.textContent = navLinks.classList.contains("open") ? "×" : "☰";
+    });
+
+    document.querySelectorAll(".nav-links a").forEach(link => {
+      link.addEventListener("click", () => {
+        navLinks.classList.remove("open");
+        menuBtn.textContent = "☰";
+      });
+    });
+
+    // Reveal animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("show");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
+
+    // Current year
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
